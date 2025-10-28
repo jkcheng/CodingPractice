@@ -36,22 +36,22 @@
 from typing import List
 
 class Solution:
-    def maxArea(self, heights: List[int]) -> int:
+    def maxArea(self, height: List[int]) -> int:
 
         return
 
 class mySolution:
-    def maxArea(self, heights: List[int]) -> int:
+    def maxArea(self, height: List[int]) -> int:
         # O(n), two pointers, move pointer at shorter height inward
-        l, r = 0, len(heights) - 1
+        l, r = 0, len(height) - 1
         maxarea = 0
         while l < r:
             # check area at current pointers, store largest area seen
-            area = (r - l) * min(heights[l], heights[r])
+            area = (r - l) * min(height[l], height[r])
             maxarea = max(maxarea, area)
 
             # move pointer with lower height
-            if heights[l] <= heights[r]:
+            if height[l] <= height[r]:
                 l += 1
             else:
                 r -= 1
@@ -60,6 +60,21 @@ class mySolution:
 
 class testcase1:
     height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+    output = 49
 
 class testcase2:
     height = [1, 1]
+    output = 1
+
+
+if __name__ == "__main__":
+    # create Solution instance
+    soln = mySolution()
+
+    # test example 1
+    result1 = soln.maxArea(testcase1.height)
+    print(f"Example 1 - Expected: {testcase1.output}, Got: {result1}, Correct: {testcase1.output == result1}")
+
+    # test example 2
+    result2 = soln.maxArea(testcase2.height)
+    print(f"Example 2 - Expected: {testcase2.output}, Got: {result2}, Correct: {testcase2.output == result2}")
