@@ -50,7 +50,7 @@
 
 from typing import List, Optional
 
-
+# https://leetcode.com/problems/evaluate-division/solutions/88275/python-fast-bfs-solution-with-detailed-e-ocvb
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
 
@@ -113,6 +113,71 @@ class mySolution:
 
         return ans
 
+class mySolution2:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        # O(n), n = len(equations + queries), model operations as a graph
+        # e.g. a / b = 2 becomes a -> b with edge value 2
+        # a / b is forward direction, b/a is reverse
+        # any a/x can be modeled as multiplying edge values in the path a -> b -> x
+
+        # # dfs search through graph
+        # def dfs(graph, a, b, ans) -> float:
+        #     if a not in graph:
+        #         return 1
+
+        #     for dest_node,val in graph[a].items():
+        #         if dest_node == b:
+        #             return ans * val
+
+        #         # continue searching through dest_node to find b
+        #         ans *= dfs(graph, dest_node, b, ans)
+
+        # create adjacency list as nested dict
+        # graph[a] = {b: val}
+        graph = {}
+        for (a, b), val in zip(equations, values):
+            # set division result as graph[a][b]
+            dests = graph.get(a, {})
+            dests[b] = val
+            graph[a] = dests
+
+            # set reverse direction for easier lookup
+            rdests = graph.get(b, {})
+            rdests[a] = 1 / val
+            graph[b] = rdests
+
+        # evaluate queries
+        ans = []
+        for q1, q2 in queries:
+            a = q1
+            b = q2
+            # if either not in graph
+            if a not in graph or b not in graph:
+                ans.append(-1)
+                continue
+
+            # bfs search through graph
+            queue = [(a, 1.0)]
+            visited = set()
+            found = False
+            while len(queue) > 0:
+                node, dist = queue.pop(0)
+                if node == b:  # if node in queue is our destination, add answer
+                    ans.append(dist)
+                    found = True
+                    break
+                visited.add(node)
+                for dest in graph[node]:
+                    if dest not in visited:
+                        new_dist = dist * graph[node][dest]
+                        queue.append((dest, new_dist))
+
+            # if queue finished without finding node b
+            if not found:
+                ans.append(-1)
+
+        return ans
+
 
 class testcase1:
     equations = [["a", "b"], ["b", "c"]]
@@ -135,7 +200,7 @@ class testcase3:
 
 if __name__ == "__main__":
     # create Solution instance
-    soln = mySolution()
+    soln = mySolution2()
 
     # test example 1
     result1 = soln.calcEquation(testcase1.equations, testcase1.values, testcase1.queries)
