@@ -69,6 +69,29 @@ class mySolution:
 
         return -1
 
+class mySolution2:
+    def findPeakElement(self, nums: List[int]) -> int:
+        # O(logn), binary search, search side with larger element
+
+        # left/right pointers
+        l, r = 0, len(nums) - 1
+
+        # binary search
+        while l <= r:
+            mid = (l + r) // 2  # avoid overflow: (l + (r-l))//2
+            # return mid if is peak
+            # mid is peak if indexes to left/right are valid and are smaller than mid
+            # or if indexes to the left/right are invalid
+            if (((mid - 1 >= 0 and nums[mid - 1] < nums[mid]) or (mid - 1 < 0))
+                and ((mid + 1 <= len(nums) - 1 and nums[mid + 1] < nums[mid]) or (mid + 1 > len(nums) - 1))):
+                return mid
+            elif mid - 1 >= 0 and nums[mid - 1] > nums[mid]:  # value to left is larger, search left
+                r = mid - 1
+            elif mid + 1 <= len(nums) - 1 and nums[mid + 1] > nums[mid]:  # right is larger
+                l = mid + 1
+
+        return -1  # should not reach here
+
 
 class testcase1:
     nums = [1,2,3,1]
@@ -89,7 +112,7 @@ class testcase4:
 
 if __name__ == "__main__":
     # create Solution instance
-    soln = mySolution()
+    soln = mySolution2()
 
     # test example 1
     result1 = soln.findPeakElement(testcase1.nums)
