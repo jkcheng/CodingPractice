@@ -56,7 +56,7 @@ class mySolution:
         l, r = 0, len(nums) - 1
 
         while l <= r:
-            mid = (l + r) // 2  # (l + (r-l))//2 to avoid overflow
+            mid = (l + r) // 2  # l + ((r-l)//2) to avoid overflow
             # return index if at peak
             # if mid+1 < len(nums) and nums[mid+1] < nums[mid] and mid-1 > -1 and nums[mid-1] < nums[mid] :
             if (mid + 1 >= len(nums) or nums[mid + 1] < nums[mid]) and (mid - 1 < 0 or nums[mid - 1] < nums[mid]):
@@ -78,7 +78,7 @@ class mySolution2:
 
         # binary search
         while l <= r:
-            mid = (l + r) // 2  # avoid overflow: (l + (r-l))//2
+            mid = (l + r) // 2  # avoid overflow: l + ((r-l)//2)
             # return mid if is peak
             # mid is peak if indexes to left/right are valid and are smaller than mid
             # or if indexes to the left/right are invalid
