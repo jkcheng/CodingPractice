@@ -66,7 +66,7 @@ class mySolution:
         # d[0], dp[1] default to cost[0], cost[1]
 
         # add 0 to end of cost for the last step
-        cost.append(0)
+        cost.append(0) # avoid having to return min(dp[-1],dp[-2])
         dp = [0] * len(cost)
         dp[0] = cost[0]
         dp[1] = cost[1]
