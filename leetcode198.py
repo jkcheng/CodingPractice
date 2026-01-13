@@ -32,9 +32,6 @@
 from typing import List, Optional
 
 # 1D DP solution: bottom up, space optimized
-from typing import List
-
-
 class Solution:
     def rob(self, nums: List[int]) -> int:
         # base case
