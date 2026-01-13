@@ -77,6 +77,11 @@ class testcase3:
     nums = [1, 2, 3, 1, 1]
     output = 5 # original ai answer = 4 wrong!
 
+# edge case where dp[1] = max(nums[0], nums[1]) matters
+class testcase4:
+    nums = [2, 1, 1, 2]
+    output = 4
+
 
 if __name__ == "__main__":
     # create Solution instance
@@ -93,3 +98,7 @@ if __name__ == "__main__":
     # test example 3
     result3 = soln.rob(testcase3.nums)
     print(f"Example 3 - Expected: {testcase3.output}, Got: {result3}, Correct: {result3 == testcase3.output}")
+
+    # test example 4
+    result4 = soln.rob(testcase4.nums)
+    print(f"Example 4 - Expected: {testcase4.output}, Got: {result4}, Correct: {result4 == testcase4.output}")
