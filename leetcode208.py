@@ -129,9 +129,47 @@ class testcase1:
     inputvals = [[], ["apple"], ["apple"], ["app"], ["app"], ["app"], ["app"]]
     output = [None, None, True, False, True, None, True]
 
+class testcase2:
+    input = ["Trie","startsWith"]
+    inputvals = [[],["a"]]
+    output = [None, False]
+
+class testcase3:
+    input = ["Trie","insert","insert","insert","insert","insert","insert","search","search","search","search","search","search","search","search","search","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith"]
+    inputvals = [[],["app"],["apple"],["beer"],["add"],["jam"],["rental"],["apps"],["app"],["ad"],["applepie"],["rest"],["jan"],["rent"],["beer"],["jam"],["apps"],["app"],["ad"],["applepie"],["rest"],["jan"],["rent"],["beer"],["jam"]]
+    output = [None,None,None,None,None,None,None,False,True,False,False,False,False,False,True,True,False,True,True,False,False,False,True,True,True]
 
 if __name__ == "__main__":
-    # create Solution instance
+    # create Solution instance for each test case
+    # test example 1
     soln = myTrie()
+    result1 = [None] * len(testcase1.output)
+    for i,call in enumerate(testcase1.input):
+        if i > 0:
+            func = getattr(soln, call)
+            input = testcase1.inputvals[i][0]
+            result = func(input)
+            result1[i] = result
+    print(f"Example 1 - Expected: {testcase1.output}, Got: {result1}, Correct: {result1 == testcase1.output}")
 
-    # todo: implement testcases for class creation problems
+    # test example 2
+    soln = myTrie()
+    result2 = [None] * len(testcase2.output)
+    for i,call in enumerate(testcase2.input):
+        if i > 0:
+            func = getattr(soln, call)
+            input = testcase2.inputvals[i][0]
+            result = func(input)
+            result2[i] = result
+    print(f"Example 2 - Expected: {testcase2.output}, Got: {result2}, Correct: {result2 == testcase2.output}")
+
+    # test example 3
+    soln = myTrie()
+    result3 = [None] * len(testcase3.output)
+    for i,call in enumerate(testcase3.input):
+        if i > 0:
+            func = getattr(soln, call)
+            input = testcase3.inputvals[i][0]
+            result = func(input)
+            result3[i] = result
+    print(f"Example 3 - Expected: {testcase3.output}, Got: {result3}, Correct: {result3 == testcase3.output}")
