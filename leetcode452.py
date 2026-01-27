@@ -73,6 +73,24 @@ class mySolution:
 
         return arrows
 
+class mySolution2:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
+        # interval problem, detect overlapping intervals
+        # O(nlogn), sort + count overlapping intervals
+        # start balloon with leftmost ending and remove any overlapping balloons from consideration
+        # increment arrows for first non-overlapping balloon and use this new balloon for overlap detection
+
+        points = sorted(points, key=lambda x: x[1])
+        arrows = 1
+
+        curr = points[0]
+        for balloon in points:
+            # new non-overlapping balloon, increment curr and arrows
+            if balloon[0] > curr[1]:
+                curr = balloon
+                arrows += 1
+
+        return arrows
 
 class testcase1:
     points = [[10, 16], [2, 8], [1, 6], [7, 12]]
@@ -86,3 +104,27 @@ class testcase3:
     points = [[1, 2], [2, 3], [3, 4], [4, 5]]
     output = 2
 
+class testcase4:
+    points = [[9, 12], [1, 10], [4, 11], [8, 12], [3, 9], [6, 9], [6, 7]]
+    output = 2
+
+
+if __name__ == '__main__':
+    # create Solution instance
+    soln = mySolution2()
+
+    # test example 1
+    result1 = soln.findMinArrowShots(testcase1.points)
+    print(f"Example 1 - Expected: {testcase1.output}, Got: {result1}, Correct: {result1 == testcase1.output}")
+
+    # test example 2
+    result2 = soln.findMinArrowShots(testcase2.points)
+    print(f"Example 2 - Expected: {testcase2.output}, Got: {result2}, Correct: {result2 == testcase2.output}")
+
+    # test example 3
+    result3 = soln.findMinArrowShots(testcase3.points)
+    print(f"Example 3 - Expected: {testcase3.output}, Got: {result3}, Correct: {result3 == testcase3.output}")
+
+    # test example 4
+    result4 = soln.findMinArrowShots(testcase4.points)
+    print(f"Example 4 - Expected: {testcase4.output}, Got: {result4}, Correct: {result4 == testcase4.output}")
