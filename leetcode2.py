@@ -64,7 +64,6 @@ def convert_linked_list_to_array(head: ListNode) -> List[int]:
     return res
 
 
-# idea: traverse lists and multiply by powers of 10 before adding
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         cur1 = l1
@@ -105,41 +104,37 @@ class Solution:
 class mySolution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         # manually add each digit one at a time
-        # cannot convert number to int because number may exceed 32-bit int
+        # note: cannot convert input l1 or l2 to int because number may exceed 32-bit int
         # create dummy pointer
         dummy = ListNode(0)
-        cur = dummy
+        curr = dummy
 
         carry = 0
-        while l1 is not None or l2 is not None:
+        while l1 is not None or l2 is not None or carry > 0:
             # add integers
             n1 = l1.val if l1 is not None else 0
             n2 = l2.val if l2 is not None else 0
-            res = n1+n2+carry
+            res = n1 + n2 + carry
 
             # handle carrying values
-            if res >= 10:
-                carry = 1
-                res = res % 10 # set result to modulo
-            else:
-                carry = 0
+            nodeval = res % 10
+            carry = res // 10
 
-            # set result as node
-            resnode = ListNode(res)
-            cur.next = resnode
-            cur = resnode
+            # create new node
+            newnode = ListNode(nodeval)
+            curr.next = newnode
 
             # move pointers
+            curr = newnode
             if l1 is not None:
                 l1 = l1.next
             if l2 is not None:
                 l2 = l2.next
 
-        # add extra node if carry remains (can also add "or carry==1" to while loop condition)
-        if carry == 1:
-            carrynode = ListNode(carry)
-            cur.next = carrynode
-            # cur = cur.next # not necessary
+        # # add extra node at end if carry remains (can also add "or carry==1" to while loop condition)
+        # if carry == 1:
+        #     carrynode = ListNode(carry)
+        #     curr.next = carrynode
 
         return dummy.next
 
