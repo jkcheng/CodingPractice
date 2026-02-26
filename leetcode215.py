@@ -61,7 +61,7 @@ class Solution:
 import heapq
 class mySolution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        # O(nlogk), create heap and pop k elements out of array
+        # O(klogn), create heap and pop k elements out of array
 
         # create heap
         heap = [-1 * n for n in nums]
@@ -73,6 +73,24 @@ class mySolution:
             k -= 1
 
         return -val
+
+# using heapq, maintain heap of size k
+import heapq
+class mySolution2:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        # O(nlogk), maintain min heap of size k with the k largest elements
+
+        # initialize heap with first k elements
+        heap = nums[:k]
+        heapq.heapify(heap)
+
+        # check each element and replace smallest in heap if necessary
+        for n in nums[k:]:
+            if n > heap[0]:
+                # replace value in heap
+                heapq.heappushpop(heap, n)
+
+        return heap[0]
 
 
 class testcase1:
@@ -88,7 +106,7 @@ class testcase2:
 
 if __name__ == '__main__':
     # create Solution instance
-    soln = mySolution()
+    soln = mySolution2()
 
     # test example 1
     result1 = soln.findKthLargest(testcase1.nums, testcase1.k)
